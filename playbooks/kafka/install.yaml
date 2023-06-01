@@ -1,0 +1,57 @@
+- name: Install Kafka
+  hosts: cores
+  tasks:
+  - name: Install openJDK
+    ansible.builtin.apt:
+      name: openjdk-19-jre-headless
+      state: present
+      update_cache: true
+    become: true
+  - name: Create install directory
+    ansible.builtin.file:
+      path: ~/install_rupert
+      state: directory
+  - name: Download Kafka
+    ansible.builtin.get_url:
+      url: https://downloads.apache.org/kafka/3.4.0/kafka_2.13-3.4.0.tgz
+      dest: ~/install_rupert/kafka_2.13-3.4.0.tgz
+      checksum: sha512:2C405149C065627CE2125088DFCCE0A4DC23AEBAA72C1157736D5829CB5CBEF273C0915EC55D2D8BA38E5E0524F0720F43E07D7D677439CD2AC7BEA618CAA65B
+  - name: Extract Kafka
+    ansible.builtin.unarchive:
+      src: ~/install_rupert/kafka_2.13-3.4.0.tgz
+      dest: ~/install_rupert/
+      remote_src: true
+  - name: Create app directory if it does exist
+    ansible.builtin.file:
+      path: ~/app
+      state: directory
+  - name: Copy Kafka Directory to appp
+    ansible.builtin.copy:
+      src: ~/install_rupert/kafka_2.13-3.4.0/
+      dest: ~/app/kafka
+      remote_src: true
+      force: false
+  - name: Configure Kraft
+    ansible.builtin.shell:  |
+      KAFKA_CLUSTER_ID="$(~/app/kafka/bin/kafka-storage.sh random-uuid)"
+      ~/app/kafka/bin/kafka-storage.sh format -t $KAFKA_CLUSTER_ID -c ~/app/kafka/config/kraft/server.properties
+    args: 
+      creates: /tmp/kraft-combined-logs/bootstrap.checkpoint
+  - name: Create app/bin directory if it does not exist
+    ansible.builtin.file:
+      path: ~/app/bin
+      state: directory
+  - name: Copy kafka systemd service file
+    ansible.builtin.copy:
+      src: files/rupert-kafka.service
+      dest: /etc/systemd/system/
+    become: true
+  - name: Enable kafka service
+    ansible.builtin.service:
+      name: rupert-kafka
+      enabled: yes
+      state: started
+      daemon_reload: true
+    async: 60
+    poll: 5
+    become: true

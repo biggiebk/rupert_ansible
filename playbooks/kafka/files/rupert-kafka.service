@@ -1,0 +1,15 @@
+[Unit]
+Description=Rupert Kafka Instance
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+WorkingDirectory=/home/rupert/app/kafka
+ExecStart=/home/rupert/app/kafka/bin/kafka-server-start.sh /home/rupert/app/kafka/config/kraft/server.properties
+Type=simple
+Restart=on-failure
+User=rupert
+ExecStop=/home/rupert/app/kafka/bin/kafka-server-stop.sh /home/rupert/app/kafka/config/kraft/server.properties
+
+[Install]
+WantedBy=multi-user.target
