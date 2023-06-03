@@ -1,0 +1,9 @@
+- name: Install VLC Media Player
+  hosts: arms
+  tasks:
+  - name: Install VLC Media Player
+    ansible.builtin.apt:
+      name: vlc
+      state: present
+      update_cache: true
+    become: true

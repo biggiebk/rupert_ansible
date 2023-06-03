@@ -1,0 +1,36 @@
+- name: Install Python Requirements
+  hosts: cores
+  tasks:
+  - name: Install python3.11
+    ansible.builtin.apt:
+      name: python3.11
+      state: present
+      update_cache: true
+    become: true
+  - name: Download get-pip.py
+    ansible.builtin.get_url:
+      url: https://bootstrap.pypa.io/get-pip.py
+      dest: ~/install_rupert/get-pip.py
+      force: false
+  - name: Install pip3.11
+    ansible.builtin.shell: python3.11 ~rupert/install_rupert/get-pip.py
+    args:
+      creates: /usr/local/bin/pip3.11
+    become: true
+  - name: Upgrade pip3.11 to ensure latest version
+    ansible.builtin.shell: python3.11 -m pip install --upgrade pip
+    become: true
+  - name: Install python-vlc
+    ansible.builtin.pip:
+      name: python-vlc
+      extra_args:
+        --user
+        --upgrade
+      executable: pip3.11
+  - name: Install kafka-python
+    ansible.builtin.pip:
+      name: kafka-python
+      extra_args:
+        --user
+        --upgrade
+      executable: pip3.11
