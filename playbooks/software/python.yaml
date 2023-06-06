@@ -34,3 +34,10 @@
         --user
         --upgrade
       executable: pip3.11
+  - name: Install BearType
+    ansible.builtin.pip:
+      name: beartype
+      extra_args:
+        --user
+        --upgrade
+      executable: pip3.11
