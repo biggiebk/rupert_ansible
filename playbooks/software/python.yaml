@@ -27,9 +27,9 @@
         --user
         --upgrade
       executable: pip3.11
-  - name: Install kafka-python
+  - name: Install confluent-kafka
     ansible.builtin.pip:
-      name: kafka-python
+      name: confluent-kafka
       extra_args:
         --user
         --upgrade
