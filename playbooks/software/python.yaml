@@ -1,6 +1,10 @@
 - name: Install Python Requirements
   hosts: cores
   tasks:
+  - name: Create install directory
+    ansible.builtin.file:
+      path: ~/install_rupert
+      state: directory
   - name: Install python3.11
     ansible.builtin.apt:
       name: python3.11
