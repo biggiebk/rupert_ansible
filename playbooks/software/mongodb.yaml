@@ -1,0 +1,33 @@
+- name: Install MongoDB
+  hosts: cores
+  tasks:
+  - name: Install gnupg
+    ansible.builtin.apt:
+      name: gnupg
+      state: present
+      update_cache: true
+    become: true
+  - name: Install curl
+    ansible.builtin.apt:
+      name: curl
+      state: present
+      update_cache: false
+    become: true
+  - name: Install public key for package management system
+    ansible.builtin.shell:  |
+      curl -fsSL https://pgp.mongodb.com/server-6.0.asc | gpg -o /usr/share/keyrings/mongodb-server-6.0.gpg --dearmor
+    args: 
+      creates: /usr/share/keyrings/mongodb-server-6.0.gpg
+    become: true
+  - name: Create package source list file
+    ansible.builtin.shell:  |
+      echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+    args: 
+      creates: /etc/apt/sources.list.d/mongodb-org-6.0.list
+    become: true
+  - name: Install MongoDB Package
+    ansible.builtin.apt:
+      name: mongodb-org
+      state: present
+      update_cache: true
+    become: true
