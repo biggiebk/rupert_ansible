@@ -45,3 +45,10 @@
         --user
         --upgrade
       executable: pip3.11
+  - name: Install PyMongo
+    ansible.builtin.pip:
+      name: pymongo
+      extra_args:
+        --user
+        --upgrade
+      executable: pip3.11
