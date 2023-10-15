@@ -11,6 +11,12 @@
       state: present
       update_cache: true
     become: true
+  - name: Install libpython3.11
+    ansible.builtin.apt:
+      name: libpython3.11
+      state: present
+      update_cache: false
+    become: true
   - name: Download get-pip.py
     ansible.builtin.get_url:
       url: https://bootstrap.pypa.io/get-pip.py
