@@ -11,24 +11,17 @@
       state: present
       update_cache: true
     become: true
+  - name: Install pip3.11
+    ansible.builtin.apt:
+      name: python3-pip
+      state: present
+      update_cache: true
+    become: true
   - name: Install libpython3.11
     ansible.builtin.apt:
       name: libpython3.11
       state: present
       update_cache: false
-    become: true
-  - name: Download get-pip.py
-    ansible.builtin.get_url:
-      url: https://bootstrap.pypa.io/get-pip.py
-      dest: ~/install_rupert/get-pip.py
-      force: false
-  - name: Install pip3.11
-    ansible.builtin.shell: python3.11 ~rupert/install_rupert/get-pip.py
-    args:
-      creates: /usr/local/bin/pip3.11
-    become: true
-  - name: Upgrade pip3.11 to ensure latest version
-    ansible.builtin.shell: python3.11 -m pip install --upgrade pip
     become: true
   - name: Install python-vlc
     ansible.builtin.pip:
@@ -36,6 +29,7 @@
       extra_args:
         --user
         --upgrade
+        --break-system-packages
       executable: pip3.11
   - name: Install confluent-kafka
     ansible.builtin.pip:
@@ -43,6 +37,7 @@
       extra_args:
         --user
         --upgrade
+        --break-system-packages
       executable: pip3.11
   - name: Install BearType
     ansible.builtin.pip:
@@ -50,6 +45,7 @@
       extra_args:
         --user
         --upgrade
+        --break-system-packages
       executable: pip3.11
   - name: Install PyMongo
     ansible.builtin.pip:
@@ -57,4 +53,5 @@
       extra_args:
         --user
         --upgrade
+        --break-system-packages
       executable: pip3.11

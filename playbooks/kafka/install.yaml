@@ -13,12 +13,12 @@
       state: directory
   - name: Download Kafka
     ansible.builtin.get_url:
-      url: https://downloads.apache.org/kafka/3.5.0/kafka_2.13-3.5.0.tgz
-      dest: ~/install_rupert/kafka_2.13-3.5.0.tgz
-      checksum: sha512:7B79BD0844DB683C06C3491955BB183D48A47FA4639D2E241B9F4FF4060C4B70814DAC7D96BEA87DFFCA0C8AE038278C4FABF68D4EA1194228D67D9C3B1D247C
+      url: https://downloads.apache.org/kafka/3.6.0/kafka_2.13-3.6.0.tgz
+      dest: ~/install_rupert/kafka_2.13-3.6.0.tgz
+      checksum: sha512:98D20F475BCCC11EB3CF05362112C788EEA7BFC88ABDDBA66CFCFB48880D3BB97918A90D44EB7C1720527BEBCA93DD231002B5159876F6EE8B7FCD91CC1B0644
   - name: Extract Kafka
     ansible.builtin.unarchive:
-      src: ~/install_rupert/kafka_2.13-3.5.0.tgz
+      src: ~/install_rupert/kafka_2.13-3.6.0.tgz
       dest: ~/install_rupert/
       remote_src: true
   - name: Create app directory if it does exist
@@ -27,14 +27,14 @@
       state: directory
   - name: Copy Kafka Directory to appp
     ansible.builtin.copy:
-      src: ~/install_rupert/kafka_2.13-3.5.0/
-      dest: ~/app/kafka_2.13-3.5.0
+      src: ~/install_rupert/kafka_2.13-3.6.0/
+      dest: ~/app/kafka_2.13-3.6.0
       remote_src: true
       force: false
   - name: Configure Kraft
     ansible.builtin.shell:  |
-      KAFKA_CLUSTER_ID="$(~/app/kafka_2.13-3.5.0/bin/kafka-storage.sh random-uuid)"
-      ~/app/kafka_2.13-3.5.0/bin/kafka-storage.sh format -t $KAFKA_CLUSTER_ID -c ~/app/kafka_2.13-3.5.0/config/kraft/server.properties
+      KAFKA_CLUSTER_ID="$(~/app/kafka_2.13-3.6.0/bin/kafka-storage.sh random-uuid)"
+      ~/app/kafka_2.13-3.6.0/bin/kafka-storage.sh format -t $KAFKA_CLUSTER_ID -c ~/app/kafka_2.13-3.6.0/config/kraft/server.properties
     args: 
       creates: /tmp/kraft-combined-logs/bootstrap.checkpoint
   - name: Create app/bin directory if it does not exist
@@ -55,3 +55,4 @@
     async: 60
     poll: 5
     become: true
+    
