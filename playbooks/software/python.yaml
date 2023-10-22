@@ -55,3 +55,11 @@
         --upgrade
         --break-system-packages
       executable: pip3.11
+  - name: Install Bottle
+    ansible.builtin.pip:
+      name: bottle
+      extra_args:
+        --user
+        --upgrade
+        --break-system-packages
+      executable: pip3.11
