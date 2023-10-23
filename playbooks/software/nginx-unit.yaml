@@ -60,6 +60,7 @@
       /usr/bin/python3.11 -m venv /web/venv
       . /web/venv/bin/activate
       /web/venv/bin/pip install Flask
+      /web/venv/bin/pip install beartype
       deactivate
     args: 
       creates: /web/venv/
