@@ -61,6 +61,7 @@
       . /web/venv/bin/activate
       /web/venv/bin/pip install Flask
       /web/venv/bin/pip install beartype
+      /web/venv/bin/pip install confluent-kafka
       deactivate
     args: 
       creates: /web/venv/
