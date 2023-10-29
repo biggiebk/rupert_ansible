@@ -15,12 +15,12 @@
     ansible.builtin.apt:
       name: python3-pip
       state: present
-      update_cache: true
+      update_cache: false
   - name: Install Python3.11 venv
     ansible.builtin.apt:
       name: python3.11-venv
       state: present
-      update_cache: true
+      update_cache: false
     become: true
   - name: Install libpython3.11
     ansible.builtin.apt:
@@ -55,6 +55,14 @@
   - name: Install PyMongo
     ansible.builtin.pip:
       name: pymongo
+      extra_args:
+        --user
+        --upgrade
+        --break-system-packages
+      executable: pip3.11
+  - name: Install TinyTuya
+    ansible.builtin.pip:
+      name: tinytuya
       extra_args:
         --user
         --upgrade
