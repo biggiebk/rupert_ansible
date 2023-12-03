@@ -68,3 +68,27 @@
         --upgrade
         --break-system-packages
       executable: pip3.11
+  - name: Install google-api-python-client
+    ansible.builtin.pip:
+      name: google-api-python-client
+      extra_args:
+        --user
+        --upgrade
+        --break-system-packages
+      executable: pip3.11
+  - name: Install google-auth-httplib2
+    ansible.builtin.pip:
+      name: google-auth-httplib2
+      extra_args:
+        --user
+        --upgrade
+        --break-system-packages
+      executable: pip3.11
+  - name: Install google-auth-oauthlib
+    ansible.builtin.pip:
+      name: google-auth-oauthlib
+      extra_args:
+        --user
+        --upgrade
+        --break-system-packages
+      executable: pip3.11
