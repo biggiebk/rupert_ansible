@@ -76,17 +76,17 @@
         --upgrade
         --break-system-packages
       executable: pip3.11
-  - name: Install google-auth-httplib2
+  - name: Install jinja2
     ansible.builtin.pip:
-      name: google-auth-httplib2
+      name: jinja2
       extra_args:
         --user
         --upgrade
         --break-system-packages
       executable: pip3.11
-  - name: Install google-auth-oauthlib
+  - name: Install sportsipy
     ansible.builtin.pip:
-      name: google-auth-oauthlib
+      name: sportsipy
       extra_args:
         --user
         --upgrade
