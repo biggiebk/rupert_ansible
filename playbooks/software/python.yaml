@@ -86,7 +86,7 @@
       executable: pip3.11
   - name: Install sportsipy
     ansible.builtin.pip:
-      name: sportsipy
+      name: git+https://github.com/davidjkrause/sportsipy@master
       extra_args:
         --user
         --upgrade
